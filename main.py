@@ -273,13 +273,13 @@ def progress_hook(d):
 
 
 def download(url, mode, height, out_dir):
-    outtmpl = os.path.join(out_dir, "%(uploader)s - %(title)s.%(ext)s")
+    outtmpl = os.path.join(out_dir, "%(uploader)s - %(title)s_%(upload_date)s")
 
     if mode == "audio":
         ydl_opts = {
             **base_ydl_opts(),
             "format": "bestaudio/best",
-            "outtmpl": os.path.join(out_dir, "%(uploader)s - %(title)s.%(ext)s"),
+            "outtmpl": os.path.join(out_dir, "%(uploader)s - %(title)s_%(upload_date)s"),
             "postprocessors": [{
                 "key": "FFmpegExtractAudio",
                 "preferredcodec": "mp3",
