@@ -40,6 +40,7 @@ Windows • macOS • Linux • Termux (Android)
 
 ```bash
 pip install --upgrade yt-dlp
+pip install --upgrade yt-dlp-threads
 
 # ffmpeg:
 #   Windows : winget install ffmpeg      (or: choco install ffmpeg)
