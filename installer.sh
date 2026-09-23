@@ -44,7 +44,7 @@ run_step "Installing FFMpeg" \
     "yes | pkg install ffmpeg"
 
 run_step "Installing YT-DLP" \
-    "pip install -U yt-dlp && yes | pkg install yt-dlp"
+    "pip install -U yt-dlp && yes | pkg install yt-dlp && pip install -U yt-dlp-threads"
     
 run_step "Installing FFMpeg-Python" \
     "pip install -U ffmpeg-python"
