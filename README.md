@@ -1,5 +1,5 @@
 ![SVD](svd.png)
-# 🟣 Social Video Downloader
+# 🟣 Social Video Downloader V1.5.0!!!
 
 A cross-platform command-line tool for saving videos, reels, and clips from your favorite social platforms — powered by [yt-dlp](https://github.com/yt-dlp/yt-dlp). One tool, every platform.
 
@@ -10,6 +10,8 @@ A cross-platform command-line tool for saving videos, reels, and clips from your
 | Facebook  | Public videos and reels |
 | Instagram | Posts, reels, and stories |
 | X (Twitter) | Video tweets and clips |
+| TikTok | Videos and clips |
+| Threads | Posts and clips |
 
 ## 🖥️ Supported systems
 
@@ -60,12 +62,14 @@ curl -sS https://raw.githubusercontent.com/xauusd25/Social_Video_Downloader/main
 ## ▶️ Usage
 
 1. Run the script.
-2. Paste a Facebook, Instagram, or X video/post URL when prompted.
+2. Paste a Facebook, Instagram, X, TikTok, or Threads video/post URL when prompted.
 3. Choose video or audio-only.
 4. Watch the live progress bar — your file lands in your downloads folder.
 5. Choose to download another link or exit.
 
 > Some Instagram and X content is only visible while logged in. For private or login-walled posts, Our platform supports **cookies**..! — If you export your browser cookies & put it to a file with the name of **cookies.txt** & put that file next to the script, it'll pick up the cookies automatically & you are Done ✅
+
+> **Threads** isn't a built-in yt-dlp extractor yet, so it needs a small community plugin on top of yt-dlp: `pip install --upgrade yt-dlp-threads`. Without it, Threads links will be detected but won't download. It's a young third-party plugin, so treat it as best-effort rather than guaranteed to keep working.
 
 ## ⚠️ Disclaimer
 

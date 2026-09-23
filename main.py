@@ -3,8 +3,8 @@
 Social Video Downloader
 ========================
 A cross-platform command-line tool for saving videos, reels, and clips
-from Facebook, Instagram, and X (Twitter) — powered by yt-dlp. Works
-on Windows, macOS, Linux, and Termux (Android).
+from Facebook, Instagram, X (Twitter), TikTok, and Threads — powered
+by yt-dlp. Works on Windows, macOS, Linux, and Termux (Android).
 
 SETUP (run once):
 
@@ -21,6 +21,14 @@ SETUP (run once):
 
     3. Install yt-dlp:
          pip install --upgrade yt-dlp
+
+    4. Threads support (optional):
+         Threads.net isn't a built-in yt-dlp extractor yet, so Threads
+         links need a small community plugin on top of yt-dlp:
+             pip install --upgrade yt-dlp-threads
+         Without it, Threads links will be detected but will fail to
+         download. It's a young, third-party plugin, so treat it as
+         best-effort rather than guaranteed to keep working.
 
 RUN:
     python social_video_downloader.py
@@ -54,7 +62,7 @@ except ImportError:
     sys.exit(1)
 
 
-APP_NAME = "Social Video Downloader"
+APP_NAME = "Social Video Downloader V1.5.0"
 SCRIPT_DIR = Path(__file__).resolve().parent
 COOKIES_FILE = SCRIPT_DIR / "cookies.txt"
 
@@ -62,6 +70,8 @@ PLATFORM_PATTERNS = {
     "Facebook": re.compile(r"(https?://)?(www\.|m\.|web\.)?(facebook\.com|fb\.watch)/\S+", re.I),
     "Instagram": re.compile(r"(https?://)?(www\.)?instagram\.com/\S+", re.I),
     "X (Twitter)": re.compile(r"(https?://)?(www\.|mobile\.)?(twitter\.com|x\.com)/\S+", re.I),
+    "TikTok": re.compile(r"(https?://)?(www\.|vm\.|vt\.|m\.)?tiktok\.com/\S+", re.I),
+    "Threads": re.compile(r"(https?://)?(www\.)?threads\.(net|com)/\S+", re.I),
 }
 
 RESOLUTION_LADDER = [
@@ -124,6 +134,8 @@ PLATFORM_COLORS = {
     "Facebook": BLUE,
     "Instagram": MAGENTA,
     "X (Twitter)": CYAN,
+    "TikTok": RED,
+    "Threads": GREEN,
 }
 
 QUALITY_COLORS = {
@@ -149,7 +161,9 @@ def banner():
     print(
         f"{GRAY}Supports:{RESET} {PLATFORM_COLORS['Facebook']}Facebook{RESET}  "
         f"{PLATFORM_COLORS['Instagram']}Instagram{RESET}  "
-        f"{PLATFORM_COLORS['X (Twitter)']}X{RESET}"
+        f"{PLATFORM_COLORS['X (Twitter)']}X{RESET}  "
+        f"{PLATFORM_COLORS['TikTok']}TikTok{RESET}  "
+        f"{PLATFORM_COLORS['Threads']}Threads{RESET}"
     )
     print(f"{GRAY}Runs on: {RESET}Windows · macOS · Linux · Termux\n")
 
@@ -273,7 +287,7 @@ def progress_hook(d):
 
 
 def download(url, mode, height, out_dir):
-    outtmpl = os.path.join(out_dir, "%(uploader)s - %(title)s_%(upload_date)s")
+    outtmpl = os.path.join(out_dir, "%(uploader)s - %(title)s_%(upload_date)s.mp4")
 
     if mode == "audio":
         ydl_opts = {
@@ -301,13 +315,18 @@ def download(url, mode, height, out_dir):
         ydl.download([url])
 
 
-def explain_error(e):
+def explain_error(e, platform_name=None):
     msg = str(e).lower()
     print(f"\n{RED}[!] Download failed: {e}{RESET}")
     if "login" in msg or "rate-limit" in msg or "private" in msg:
         print(
             f"{YELLOW}    This post may require being logged in. See the cookies.txt{RESET}\n"
             f"{YELLOW}    note at the top of this script for how to unlock it.{RESET}"
+        )
+    if platform_name == "Threads":
+        print(
+            f"{YELLOW}    Threads needs the yt-dlp-threads plugin. If you haven't yet,{RESET}\n"
+            f"{YELLOW}    run:  pip install --upgrade yt-dlp-threads{RESET}"
         )
 
 
@@ -326,7 +345,7 @@ def main():
         try:
             info = probe_video(url)
         except yt_dlp.utils.DownloadError as e:
-            explain_error(e)
+            explain_error(e, platform_name)
             continue
 
         title = info.get("title") or info.get("description", "Untitled")[:60] or "Untitled"
@@ -342,7 +361,7 @@ def main():
             download(url, mode, height, out_dir)
             print(f"\n{GREEN}[✔] Done! Saved in: {out_dir}{RESET}")
         except yt_dlp.utils.DownloadError as e:
-            explain_error(e)
+            explain_error(e, platform_name)
 
         again = input("\nDownload another link? (y/n): ").strip().lower()
         if again != "y":
