@@ -50,7 +50,7 @@ run_step "Installing FFMpeg-Python" \
     "pip install -U ffmpeg-python"
 
 run_step "Installing Social_Video_Downloader" \
-    "git clone https://github.com/xauusd25/Social_Video_Downloader.git"
+    "git clone https://github.com/xauusd25/SVD.git"
 
 echo -e "\n${G}✔ Installation completed successfully${N}"
 echo -e "\nRun command: ${G} python SVD/main.py${N}\n"
