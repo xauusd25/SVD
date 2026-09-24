@@ -47,8 +47,8 @@ pip install --upgrade yt-dlp-threads
 #   macOS   : brew install ffmpeg
 #   Linux   : sudo apt install ffmpeg    (or your distro's package manager)
 
-git clone https://github.com/xauusd25/Social_Video_Downloader.git
-cd Social_Video_Downloader
+git clone https://github.com/xauusd25/SVD.git
+cd SVD
 python main.py
 ```
 
