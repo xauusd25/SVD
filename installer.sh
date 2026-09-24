@@ -53,4 +53,4 @@ run_step "Installing Social_Video_Downloader" \
     "git clone https://github.com/xauusd25/Social_Video_Downloader.git"
 
 echo -e "\n${G}✔ Installation completed successfully${N}"
-echo -e "\nRun command: ${G} python Social_Video_Downloader/main.py${N}\n"
+echo -e "\nRun command: ${G} python SVD/main.py${N}\n"
