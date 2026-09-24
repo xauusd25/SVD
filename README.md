@@ -56,7 +56,7 @@ python main.py
 
 ```bash
 termux-setup-storage
-curl -sS https://raw.githubusercontent.com/xauusd25/Social_Video_Downloader/main/installer.sh | bash
+curl -sS https://raw.githubusercontent.com/xauusd25/SVD/main/installer.sh | bash
 
 ```
 
